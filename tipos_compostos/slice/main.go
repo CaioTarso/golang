@@ -10,4 +10,8 @@ func main() {
 
 	o := []int{1, 2, 3, 4, 5}
 	fmt.Println(o[2])
+	s := make([]int, 3, 5)
+	fmt.Println(s)
+	fmt.Println(len(s))
+	fmt.Println(cap(s))
 }
