@@ -5,18 +5,30 @@ import (
 	"time"
 )
 
-func main() {
-	ch := make(chan int, 3)
+func producer(c chan int) {
+	for i := 0; i < 5; i++ {
+		c <- i
+	}
+	close(c)
+}
 
-	go func() {
-		ch <- 10
-		ch <- 20
-		ch <- 30
-	}()
-   
+func consumer(c chan int) {
+    for v := range c {
+		fmt.Println(v)
+	}
+	fmt.Println("Consumidor encerrado")
+}
+
+
+func main() {
+	ch := make(chan int)
+
+	go producer(ch)
+	go consumer(ch)
+	go consumer(ch)
+
 	time.Sleep(1 * time.Second)
-	<- ch // Recebe o valor do canal
-	<- ch // Recebe o próximo valor do canal
-	valor := <-ch
-	fmt.Println("Valor recebido do canal:", valor)
+
+   
+
 }
